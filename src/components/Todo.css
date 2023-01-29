@@ -1,0 +1,34 @@
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #3d9e5d;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.checked{
+  text-decoration: line-through;
+  color: #5e38bc;
+}
+
+.todo input{
+  cursor: pointer;
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+input:checked{
+  background-color: #3d9e5d;
+}
+
+.todo button{
+  cursor: pointer;
+  height: 2rem;
+}
+
+.todo .buttons{
+  display: flex;
+  gap: .5rem
+}

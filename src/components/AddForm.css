@@ -1,0 +1,26 @@
+.add-form{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    margin-top: -1rem;
+}
+
+.add-form input{
+    border: 1px #3f7fa7 solid;
+    height: 2rem;
+    border-radius: 10px;
+    padding-left: 1rem;
+}
+
+.add-form button{
+    border: 1px solid #3f7fa7;
+    background-color: #5FBFF9;
+    color: #141b3a;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
