@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import "./Todo.css";
 import { connect } from "react-redux";
 import {
-  deleteToto,
-  startEdit,
-  toggleTodo,
+  actionToggleTodo,
+  actionDeleteToto,
+  actionStartEdit,
 } from "../redux/actions/toDoActions";
 
 class Todo extends Component {
@@ -20,7 +19,7 @@ class Todo extends Component {
       todo: { id },
     } = this.props;
     this.setState({ checked: !checked }, () => {
-      dispatch(toggleTodo(id, checked));
+      dispatch(actionToggleTodo(id, checked));
     });
   };
 
@@ -29,12 +28,15 @@ class Todo extends Component {
       dispatch,
       todo: { id },
     } = this.props;
-    dispatch(deleteToto(id));
+    dispatch(actionDeleteToto(id));
   };
 
   handleStartEdit = () => {
-    const { dispatch } = this.props;
-    dispatch(startEdit());
+    const {
+      dispatch,
+      todo: { id },
+    } = this.props;
+    dispatch(actionStartEdit(id));
   };
 
   render() {
@@ -53,10 +55,10 @@ class Todo extends Component {
         <p className={checked ? "checked" : ""}>{todoText}</p>
         <div className="buttons">
           <button type="button" onClick={this.handleStartEdit}>
-            <FiEdit2 />
+            🖋️
           </button>
           <button type="button" onClick={this.handleDelete}>
-            <FiTrash2 />
+            🗑
           </button>
         </div>
       </div>

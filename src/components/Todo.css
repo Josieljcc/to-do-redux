@@ -19,10 +19,6 @@
   height: 1.3rem;
 }
 
-input:checked{
-  background-color: #3d9e5d;
-}
-
 .todo button{
   cursor: pointer;
   height: 2rem;

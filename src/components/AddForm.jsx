@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addTodo } from "../redux/actions/toDoActions";
-import { FiEdit2 } from "react-icons/fi";
+import { actionAddTodo, actionEdit } from "../redux/actions/toDoActions";
 import "./AddForm.css";
 
 class AddForm extends Component {
@@ -15,45 +14,67 @@ class AddForm extends Component {
 
   createId = () => {
     const { todos } = this.props;
-    if (todos.length) {
-      return todos[todos.length - 1].id + 1;
+
+    if (todos.length === 0) {
+      return 0;
     }
-    return 0;
+    const lastId = todos[todos.length - 1].id;
+    return lastId + 1;
+  };
+
+  addTodo = () => {
+    const { dispatch } = this.props;
+    const { todoText } = this.state;
+    const todo = {
+      id: this.createId(),
+      todoText,
+      active: true,
+    };
+    dispatch(actionAddTodo(todo));
+    this.setState({ todoText: "" });
+  };
+
+  editTodo = () => {
+    const { dispatch, idToEdit, todos } = this.props;
+    const { todoText } = this.state;
+    const todo = {
+      id: idToEdit,
+      todoText,
+      active: todos[idToEdit].active,
+    };
+    dispatch(actionEdit(todo));
+    this.setState({ todoText: "" });
   };
 
   handleTodo = () => {
     const { todoText } = this.state;
-    const { dispatch, isEditing } = this.props;
+    const { isEditing } = this.props;
     if (!todoText) {
       window.alert("insira uma tarefa");
       return;
     }
     if (!isEditing) {
-      const todo = {
-        id: this.createId(),
-        todoText,
-        active: true,
-      };
-      dispatch(addTodo(todo));
-      this.setState({ todoText: "" });
+      this.addTodo();
+      return;
     }
+    this.editTodo();
   };
 
   render() {
     const { todoText } = this.state;
-    const { isEditing } = this.props;
+    const { isEditing, todos, idToEdit } = this.props;
     return (
       <div className="add-form">
         <input
           type="text"
           name="todoText"
-          placeholder="Nova Tarefa"
+          placeholder={isEditing ? todos[idToEdit].todoText : "Nova Tarefa"}
           value={todoText}
           onChange={this.handleInput}
         />
         {isEditing ? (
           <button type="button" onClick={this.handleTodo}>
-            <FiEdit2 />
+            🖋️
           </button>
         ) : (
           <button type="button" onClick={this.handleTodo}>
@@ -65,9 +86,10 @@ class AddForm extends Component {
   }
 }
 
-const mapStateToProps = ({ todos, isEditing }) => ({
+const mapStateToProps = ({ todos, isEditing, idToEdit }) => ({
   todos,
   isEditing,
+  idToEdit,
 });
 
 export default connect(mapStateToProps)(AddForm);
